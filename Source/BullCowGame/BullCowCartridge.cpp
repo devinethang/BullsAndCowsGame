@@ -18,24 +18,25 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 
 	if (bGameOver)
 	{
+		ClearScreen();
 		SetupGame();
 	}
 	else
 	{
 		if (Input == HiddenWord)
 		{
-			PrintLine(TEXT("You guessed it!"));
-
+			PrintLine(TEXT("You win!"));
+			EndGame();
 		}
 		else
 		{
 			if (Input.Len() != HiddenWord.Len())
 			{
-				PrintLine(TEXT("You have the wrong amount of characters!"));
-			}
-
-			EndGame();
+				PrintLine(TEXT("The hidden word is %i characters long! \nYou have lost!"), HiddenWord.Len());
+				EndGame();
+			}	
 		}
+
 		// Check If Isogram
 		// Prompt To Guess Agian
 		// Check Right Number Of Characters
@@ -72,5 +73,5 @@ void UBullCowCartridge::SetupGame()
 void UBullCowCartridge::EndGame()
 {
 	bGameOver = true;
-	PrintLine(TEXT("You lose press enter."));
+	PrintLine(TEXT("Press enter to continue."));
 }
