@@ -5,12 +5,15 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
 
+
+	
+
+
+	SetupGame();// Seting Up Game
+
 	// Welcome The Player
-	PrintLine(TEXT("WELCOME TO BULL COWS."));
-	PrintLine(TEXT("Type something and press enter."));
+	PrintLine(TEXT("The HiddenWord is: %s.\r\nIt is %i characters long."), *HiddenWord, HiddenWord.Len());
 
-
-	InitGame();// Seting Up Game
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
@@ -20,9 +23,6 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 	// Checking The players Guess
 
 
-	
-
-
 	if (Input == HiddenWord)
 	{
 		PrintLine(TEXT("You guessed it!"));
@@ -30,10 +30,12 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 	}
 	else
 	{
-		PrintLine(TEXT("Your were wrong!"));
-
-
+		if (Input.Len() != HiddenWord.Len())
+		{
+			PrintLine(TEXT("You have the wrong amount of characters!"));
+		}
 		
+		PrintLine(TEXT("Your were wrong!"));
 	}
 	// Check If Isogram
 	// Prompt To Guess Agian
@@ -52,8 +54,12 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 
 }
 
-void UBullCowCartridge::InitGame()
+void UBullCowCartridge::SetupGame()
 {
+	// Welcome The Player
+	PrintLine(TEXT("WELCOME TO BULL COWS."));
+	PrintLine(TEXT("Type something and press enter."));
+
 	HiddenWord = TEXT("isogram"); // Set HiddenWord
 	Lives = 4; // Set lives
 
