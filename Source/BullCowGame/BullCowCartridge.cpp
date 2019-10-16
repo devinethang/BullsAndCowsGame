@@ -32,9 +32,20 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 		{
 			if (Input.Len() != HiddenWord.Len())
 			{
-				PrintLine(TEXT("The hidden word is %i characters long! \nYou have lost!"), HiddenWord.Len());
-				EndGame();
+				PrintLine(TEXT("The hidden word is %i characters long!"), HiddenWord.Len());
 			}	
+
+			--Lives;
+			if (Lives > 0)
+			{
+				PrintLine(TEXT("You lost a life you have %i lives left."), Lives);
+			}
+			else
+			{
+				PrintLine(TEXT("You lose."));
+				EndGame();
+			}
+			
 		}
 
 		// Check If Isogram
@@ -58,13 +69,14 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 void UBullCowCartridge::SetupGame()
 {
 	HiddenWord = TEXT("isogram"); // Set HiddenWord
-	Lives = 4; // Set lives
+	Lives = HiddenWord.Len(); // Set lives
 	bGameOver = false;
 
 	// Welcome The Player
 	PrintLine(TEXT("WELCOME TO BULL COWS."));
 	//PrintLine(TEXT("The HiddenWord is: %s.\r\nIt is %i characters long."), *HiddenWord, HiddenWord.Len());
 	PrintLine(TEXT("Guess the %i letter word."), HiddenWord.Len());
+	PrintLine(TEXT("You have %i lives."), Lives);
 	PrintLine(TEXT("Type something and press enter."));
 
 	// Prompt Player for Guess
