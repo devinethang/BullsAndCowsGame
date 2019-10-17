@@ -23,45 +23,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 	}
 	else
 	{
-		if (Input == HiddenWord)
-		{
-			PrintLine(TEXT("You win!"));
-			EndGame();
-		}
-		else
-		{
-			if (Input.Len() != HiddenWord.Len())
-			{
-				PrintLine(TEXT("The hidden word is %i characters long!"), HiddenWord.Len());
-			}	
-
-			--Lives;
-			if (Lives > 0)
-			{
-				PrintLine(TEXT("You lost a life you have %i lives left."), Lives);
-			}
-			else
-			{
-				PrintLine(TEXT("You lose."));
-				EndGame();
-			}
-			
-		}
-
-		// Check If Isogram
-		// Prompt To Guess Agian
-		// Check Right Number Of Characters
-		// Prompt To Guess Agian
-
-		// Remove Life
-
-
-		// Check If Lives > 0
-		// Yes PlayAgain
-		// If No Show GameOver
-		// Press Enter to play again
-		// Check User Input
-		// Play Again Or Quit
+		ProcessGuess(Input);
 	}
 
 }
@@ -86,4 +48,48 @@ void UBullCowCartridge::EndGame()
 {
 	bGameOver = true;
 	PrintLine(TEXT("Press enter to continue."));
+}
+
+void UBullCowCartridge::ProcessGuess(const FString& Guess)
+{
+	if (Guess == HiddenWord)
+	{
+		PrintLine(TEXT("You win!"));
+		EndGame();
+	}
+	else
+	{
+		if (Guess.Len() != HiddenWord.Len())
+		{
+			PrintLine(TEXT("The hidden word is %i characters long!"), HiddenWord.Len());
+		}
+
+		--Lives;
+		if (Lives > 0)
+		{
+			PrintLine(TEXT("You lost a life you have %i lives left."), Lives);
+		}
+		else
+		{
+			PrintLine(TEXT("You lose."));
+			EndGame();
+		}
+
+	}
+
+	// Check If Isogram
+	// Prompt To Guess Agian
+	// Check Right Number Of Characters
+	// Prompt To Guess Agian
+
+	// Remove Life
+
+
+	// Check If Lives > 0
+	// Yes PlayAgain
+	// If No Show GameOver
+	// Press Enter to play again
+	// Check User Input
+	// Play Again Or Quit
+
 }
