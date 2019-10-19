@@ -41,12 +41,21 @@ void UBullCowCartridge::SetupGame()
 	PrintLine(TEXT("You have %i lives."), Lives);
 	PrintLine(TEXT("Type something and press enter."));
 
+	const TCHAR HW[] = TEXT("isogram");
+	//PrintLine(TEXT("Character 1 of the hidden word is: %c"), HiddenWord[0]);
+	for (int i = 0; i < HiddenWord.Len(); ++i)
+	{
+		PrintLine(TEXT("Character %i of the hidden word is: %c"), i+1, HiddenWord[i]);
+	}
+
 	// Prompt Player for Guess
 }
 
 void UBullCowCartridge::EndGame()
 {
 	bGameOver = true;
+	ClearScreen();
+	PrintLine(TEXT("You have no lives left."));
 	PrintLine(TEXT("Press enter to continue."));
 }
 
@@ -56,35 +65,50 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 	{
 		PrintLine(TEXT("You win!"));
 		EndGame();
+		return;
 	}
+
+
+
 	else
 	{
+ 	
 		if (Guess.Len() != HiddenWord.Len())
 		{
 			PrintLine(TEXT("The hidden word is %i characters long!"), HiddenWord.Len());
 		}
 
 		--Lives;
-		if (Lives > 0)
+		if (Lives <= 0)
 		{
-			PrintLine(TEXT("You lost a life you have %i lives left."), Lives);
-		}
-		else
-		{
-			PrintLine(TEXT("You lose."));
 			EndGame();
+			return;
 		}
+
 
 	}
 
-	// Check If Isogram
-	// Prompt To Guess Agian
-	// Check Right Number Of Characters
-	// Prompt To Guess Agian
 
+	// Check If Isogram
+	 if (!IsIsogram(Guess))
+
+	 {
+			/* code */
+		PrintLine(TEXT("No repeating letters, guess again"));
+		return;
+	 }
+
+	// Prompt To Guess Again
+	// Check Right Number Of Characters
+	{	
+		PrintLine(TEXT("You lost a life you have %i lives left."), Lives);	
+		PrintLine(TEXT("the hidden word is %i letters long"), HiddenWord.Len());
+		return;
+	}
+	// Prompt To Guess Again
 	// Remove Life
 
-
+	// Show Player Bulls and cows
 	// Check If Lives > 0
 	// Yes PlayAgain
 	// If No Show GameOver
@@ -92,4 +116,16 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 	// Check User Input
 	// Play Again Or Quit
 
+}
+
+
+bool UBullCowCartridge::IsIsogram(FString Word)
+{
+	//	For each letter.
+	//	Strart at element [0].
+	//	Until we reach [Word.Len() -1].
+	//	if any are the same return false.
+
+
+	return true;
 }
