@@ -93,7 +93,7 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 	 if (!IsIsogram(Guess))
 
 	 {
-			/* code */
+		/* code */
 		PrintLine(TEXT("No repeating letters, guess again"));
 		return;
 	 }
@@ -119,8 +119,15 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 }
 
 
-bool UBullCowCartridge::IsIsogram(FString Word)
+bool UBullCowCartridge::IsIsogram(const FString& Word)
 {
+	for (int32 Index = 0, Comparison = Index + 1; Comparison < Word.Len(); Comparison++)
+	{
+		if (Word[Index] == Word[Comparison])
+		{
+			return false;
+		}
+	}
 	//	For each letter.
 	//	Strart at element [0].
 	//	Until we reach [Word.Len() -1].
