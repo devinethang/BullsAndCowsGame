@@ -55,16 +55,15 @@ void UBullCowCartridge::EndGame()
 {
 	bGameOver = true;
 	ClearScreen();
-	PrintLine(TEXT("You have no lives left."));
-	PrintLine(TEXT("Press enter to continue."));
 }
 
 void UBullCowCartridge::ProcessGuess(const FString& Guess)
 {
 	if (Guess == HiddenWord)
 	{
-		PrintLine(TEXT("You win!"));
 		EndGame();
+		PrintLine(TEXT("You win!"));
+		PrintLine(TEXT("Press enter to continue."));
 		return;
 	}
 
@@ -82,6 +81,8 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
 		if (Lives <= 0)
 		{
 			EndGame();
+			PrintLine(TEXT("You have no lives left."));
+			PrintLine(TEXT("Press enter to continue."));
 			return;
 		}
 
